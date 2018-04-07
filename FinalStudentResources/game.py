@@ -52,4 +52,48 @@ class Game:
         obj = self.board[row][col].peek()
         return type(obj) is Plant
 
-    def remove(self, row, col): #dequeue
+    def remove(self, row, col):
+        if self.board[row][col] is is_plant:
+            self.board[row][col].dequeue()
+        else:
+            self.board[row][col].dequeue()
+            self.cash += Non_Plant.worth
+            self.nonplants += 1
+    def place_nonplant(self, row):
+        np = Non_Plant()
+        self.board[row][self.width-1].enqueue()
+        self.nonplants += 1
+
+    def place_plant(self, row, col):
+        if not self.is_plant(row, col = self.width - 1) or not self.is_nonplant(row,col):
+            p = Plant()
+            self.board[row][col].enqueue(p)
+            self.cash -= Plant.cost
+
+    def place_wave(self):
+        curr = self.waves.head
+        while curr:
+            if curr.data.wave_num == self.turn_number:
+                for i in range(curr.data.num):
+                    self.place_nonplant(curr.data.row)
+                self.waves.head = curr.next
+                self.waves_num -= 1
+            curr = curr.next
+
+    def plant_turn(self):
+        for row in range(self.height):
+            for col in range(self.width):
+                if self.is_plant(row, col):
+                    for c in range(col, self.width):
+                        if self.is_nonplant(row, c):
+                            p = self.board[row][col].peek()
+                            np = self.board[row][c].peek()
+                            p.attack(np)
+                            if np.hp <= 0:
+
+    def nonplant_turn(self):
+        for row in range(self.height):
+            for col in range(self.width):
+                if self.is_nonplant(row, col):
+                    for c in range(col)
+                        
